@@ -1,0 +1,109 @@
+<?php 
+
+$bobblog_api_url = "http://www.redcodebluecode.com/api/";
+
+if (isset($blog_postid)) {
+    $url = "$bobblog_api_url?key&type=post&postid=$blog_postid";
+    
+} else if (isset($blog_permalink)) {
+    $url = "$bobblog_api_url?key&type=post&permalink=$blog_permalink";
+    
+}
+
+$curl = curl_init(); 
+curl_setopt($curl, CURLOPT_URL, $url);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
+$data = curl_exec($curl);
+
+// Check if any error occurred
+if(curl_errno($curl)) {
+    echo 'Curl error: ' . curl_error($curl); exit;
+}
+curl_close($curl);
+
+$blog_data = json_decode($data, true);
+//echo "<pre>";
+//print_r($blog_data);
+//echo "</pre>";
+//die;
+?>
+
+<?php
+
+if (sizeof($blog_data) == 0) {
+    redirectUrl(BLOG_URL);
+    
+} else { ?>
+
+<div class="blog-h1"><h1><?= $blog_data[0]['posttitle'] ?></h1></div>
+<div class="blog-post-meta">
+    <div class="blog-author"><?= $blog_data[0]['author'] ?> | <?= $blog_data[0]['publishdate'] ?></div>
+</div>
+
+<?php
+
+$size = sizeof($blog_data);
+for ($i = 0; $i < $size; $i++) {
+    $blog = $blog_data[$i];
+    ?>
+
+    <div class="blog-post-wrapper">
+        <div class="blog-post">
+            <?= $blog['content'] ?>
+        </div>
+    </div>
+    <div class="blog-comment-section">
+        <div class="blog-comment-section-top">
+            
+            <div class="blog-comment-title">Comments: <?= $blog['hascomments'] ?></div>
+            <div class="blog-comment-likes"><i class="far fa-heart"></i> <?= $blog['likecount'] ?></div>
+        </div>
+        <div class="leave-a-comment-section comment-form">
+            <div class="leave-a-comment-title">Leave a Comment</div>
+            <div class="enter-comment">
+                <textarea name="comment" class="leave-a-comment" id="leave-a-comment" placeholder="Leave a comment..."></textarea>
+            </div>
+            <div class="sign-in-form">
+                <div>
+                    <input name="guestname" type="email" id="leave-a-comment-name" placeholder="Your Name">
+                </div>
+                <div>
+                    <input name="guestemail" type="text" id="leave-a-comment-email" placeholder="Email Address">
+                </div>
+            </div>
+            <div class="submit-comment" id="submit-comment">Submit</div>
+        </div>
+            
+        <div class="blog-comment-section-comments"></div>
+    </div>
+    <script>
+        var postid = <?= $blog['id']; ?>;
+    </script>
+
+    <?php
+}
+
+?>
+        
+
+<script>
+    var data = <?= $data ?>;
+    var offset = <?= $count ?>;
+//    var url = "<?= $url ?>";
+//    var data = {};
+//    console.log("here");
+//    $.ajax({
+//        url: url,
+//        type: "GET",
+//        processData: false,
+//        contentType: false,
+//        data: data
+//    }).done(function(_data){
+//        var data = JSON.parse(_data);
+//        console.log(data);
+//    });
+
+</script>
+
+<?php } ?>
