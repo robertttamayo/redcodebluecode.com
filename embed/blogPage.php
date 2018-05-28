@@ -62,7 +62,7 @@ for ($i = 0; $i < $size; $i++) {
         <div class="leave-a-comment-section comment-form">
             <div class="leave-a-comment-title">Leave a Comment</div>
             <div class="enter-comment">
-                <textarea name="comment" class="leave-a-comment" id="leave-a-comment" placeholder="Leave a comment..."></textarea>
+                <textarea name="comment" maxlength="280" class="leave-a-comment" id="leave-a-comment" placeholder="Leave a comment..."></textarea>
             </div>
             <div class="sign-in-form">
                 <div>

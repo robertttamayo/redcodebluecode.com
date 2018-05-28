@@ -2,8 +2,7 @@ var Comments = (function(){
     /**
     config start
     */
-//    var url = "http://localhost/bobblog2/api/";
-    var url = "http://www.estellaphoto.com/blog/api/";
+    var url = "http://www.redcodebluecode.com/api/";
     var userCookieName = "bobblogguest";
     /**
     config end
@@ -56,12 +55,13 @@ var Comments = (function(){
             });
         }
         getComments();
+        var anchor;
         $('body').on('click', '.submit-comment', function(){
             console.log("it's a click!");
             var isReply = false;
             var replyTo = '';
             var commentContent = '';
-            var anchor = $(this).closest('.comment-form');
+            anchor = $(this).closest('.comment-form');
             if ($(this).hasClass('submit-reply')) {
                 isReply = true;
                 replyTo = anchor.attr('data-replyto');
@@ -72,6 +72,7 @@ var Comments = (function(){
             if (cookie !== '') {
                 submitComment();
             } else {
+                console.log('logging in guest first, doing guest API call');
                 var guestname = anchor.find('input[name=guestname]').val();
                 var guestemail = anchor.find('input[name=guestemail]').val();
                 sendUrl = url;
@@ -122,6 +123,7 @@ var Comments = (function(){
                     data: data
                 }).done(function(_data){
                     _data = JSON.parse(_data);
+                    console.log(_data);
                     if (isReply) {
                         var blogComment =  $('.blog-comment[data-comment-id=' + replyTo + ']');
                         blogComment.removeClass('reply-active');

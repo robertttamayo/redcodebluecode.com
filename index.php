@@ -62,6 +62,37 @@
             <div class="main-right"></div>
         </div>
         <footer></footer>
+        <script type="blog/template" id="comment-template">
+            <div class="blog-comment" data-replies-visible="false" data-comment-id="{{commentid}}">
+                <div class="commentor-name">{{guestname}}</div>
+                <div class="comment-content">
+                    {{comment}}
+                </div>
+                <div class="comment-replies comment-reply-count-{{hasreplies}}">
+                    <div class="comment-replies-title view-replies" data-replies-loaded="false">Show {{hasreplies}} Replies <i class="fas fa-angle-down"></i></div>
+                    <div class="hide-replies">Hide Replies <i class="fas fa-angle-up"></i></div>
+                    <div class="comment-replies-content" data-commentid="{{commentid}}"></div>
+                </div>
+                <div class="comment-reply"><i class="fas fa-reply"></i> Reply</div>
+                
+                <div class="comment-leave-a-reply comment-form" data-replyto="{{commentid}}">
+                    <div class="enter-comment">
+                        <textarea class="leave-a-comment" name="comment" placeholder="Leave a reply..."></textarea>
+                    </div>
+                    <div class="sign-in-form">
+                        <div>
+                            <input name="guestname" type="email" placeholder="Your Name">
+                        </div>
+                        <div>
+                            <input type="text" name="guestemail" placeholder="Email Address">
+                        </div>
+                    </div>
+                    <input style="display: none;" type="hidden" name="replyto" value="{{commentid}}"> 
+                    <div class="submit-reply submit-comment" >Reply</div>
+                </div>
+                
+            </div>
+        </script>
 <!--        <script src="/assets/js/core.js"></script>-->
         
     </body>

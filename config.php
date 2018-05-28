@@ -26,8 +26,8 @@ define("TEMPLATE_DIR", __DIR__ . '/src/html/template/');
 //define("ASSETS_URL", ROOT . 'assets/');
 define("MAIN_SITE_TEMPLATE_URL", ROOT. "mainSiteHTML.html");
 
-//define("DB_SERVER", "localhost");
-define("DB_SERVER", "mysql.freehostia.com");
+define("DB_SERVER", "localhost");
+//define("DB_SERVER", "mysql.freehostia.com");
 define("DB_NAME", "robtam10_rcbc");
 define("DB_USERNAME", "robtam10_rcbc");
 define("DB_PASSWORD", "sql25p!K@25");

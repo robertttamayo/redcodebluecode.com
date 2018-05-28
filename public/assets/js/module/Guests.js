@@ -52,7 +52,7 @@ var Guests = (function(){
         $.ajax({
             url: sendUrl
         }).done(function(_data){
-            callback(data);
+            callback(_data);
         });
         setCookie(userCookieName, JSON.stringify(guestdata), 365);
         $('body').removeClass(loggedOutClassName);

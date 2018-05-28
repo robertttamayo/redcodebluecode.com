@@ -1,6 +1,6 @@
 var Guests = (function(){
-//    var url = "http://localhost/bobblog2/api/";
-    var url = "http://www.estellaphoto.com/blog/api/";
+    var url = "http://www.redcodebluecode.com/api/";
+
     var userCookieName = "bobblogguest";
     var loggedInClassName = 'user-signed-in';
     var UserInfo = {
