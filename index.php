@@ -10,10 +10,18 @@
 <?php include 'config.php'; ?>
 <?php include 'blogrouter.php' ?>
 
+<?php if ($blog_mode == BLOG_POST_PAGE) { ?>
+    <?php include 'blog_data.php'; ?>
+<?php } ?>
+
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Robert Tamayo's Code Blog – Red Code Blue Code</title>
+        <?php if ($blog_mode == BLOG_POST_PAGE) { ?>
+            <title><?= $blog_data[0]['posttitle'] ?></title>
+        <?php } else { ?>
+            <title>Robert Tamayo's Code Blog – Red Code Blue Code</title>
+        <?php } ?>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
