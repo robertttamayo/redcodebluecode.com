@@ -229,9 +229,9 @@ header {
 
 .main-middle {
   margin: auto;
-  width: 600px;
+  width: 800px;
 }
-@media (max-width: 768px) {
+@media (max-width: 860px) {
   .main-middle {
     width: calc(100% - 30px);
   }
@@ -330,6 +330,7 @@ pre {
   border-radius: 5px;
   padding: 20px;
   overflow-x: auto;
+  font-size: 14px;
 }
 
 .blog-h1, .blog-h1 h1 {

@@ -374,8 +374,7 @@ function savePost(data){
     console.log('postid: ' + postid);
     console.log('wasDraft: ' + wasDraft);
     
-    $.post(window.location.href, {    
-        async: true,
+    $.post('#', {    
         action: actionSavePost,
         name: title,
         file: raw,
