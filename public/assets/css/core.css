@@ -272,7 +272,8 @@ header {
 }
 
 .blogfeed-title {
-  font-family: "Roboto Slab", serif;
+  font-family: "Fira Sans", sans-serif;
+  font-weight: bold;
   color: #78abcd;
   text-align: right;
   padding-right: 20px;
@@ -335,14 +336,14 @@ pre {
 
 .blog-h1, .blog-h1 h1 {
   color: #dc1d31;
-  font-family: "Roboto Slab", serif;
-  font-weight: normal;
+  font-family: "Fira Sans", sans-serif;
+  font-weight: bold;
   margin-top: 0;
   margin-bottom: 0;
 }
 
 .blog-post-meta {
-  font-family: "Roboto Slab", serif;
+  font-family: "Fira Sans", sans-serif;
   color: #78abcd;
   margin-top: 10px;
   margin-bottom: 20px;

@@ -53,7 +53,7 @@ $blog_data = json_decode($data, true);
             </div>
             <div class="blogfeed-text-preview">
                 <div><?= $short_preview ?></div>
-                <div><a class="read-more-link" href="<?= BLOG_URL ?><?= $blog['permalink'] ?>">Go to Post <i class="fas fa-arrow-alt-circle-right"></i></a></div>
+                <div><a class="read-more-link" href="<?= BLOG_URL ?><?= $blog['permalink'] ?>">Continue <i class="fas fa-arrow-alt-circle-right"></i></a></div>
             </div>
             
         </div>
