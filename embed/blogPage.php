@@ -9,7 +9,7 @@ if (sizeof($blog_data) == 0) {
 
 <div class="blog-h1"><h1><?= $blog_data[0]['posttitle'] ?></h1></div>
 <div class="blog-post-meta">
-    <div class="blog-author"><?= $blog_data[0]['author'] ?> | <?= $blog_data[0]['publishdate'] ?></div>
+    <div class="blog-author"><?= $blog_data[0]['author'] ?> | <?= date_format(date_create($blog_data[0]['publishdate']), "F d, Y"); ?></div>
 </div>
 
 <?php
