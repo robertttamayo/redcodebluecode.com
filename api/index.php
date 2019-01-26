@@ -146,7 +146,7 @@ if ($type == 'post') {
     $data = executeSQL();
     finish($data);
 } else if ($type == 'comment') { // retrieve and post comments
-    debug('type = comment');
+    // debug('type = comment');
     
     // fields for both getting and creating comments
     $postid = $_GET['postid'];
@@ -170,12 +170,15 @@ if ($type == 'post') {
             settype($replyto, 'integer');
         }
         
-        
         $timewritten = date("Y-m-d H:i:s");
         
-        $sql = "INSERT INTO commentbase (comment, commentblogid, commentguestid, replyto, timewritten)
-        VALUES (:comment, $postid, $commentguestid, $replyto, NOW())";
+        $secret = mt_rand();
+
+        $sql = "INSERT INTO commentbase (comment, commentblogid, commentguestid, replyto, commentsecret, timewritten)
+        VALUES (:comment, $postid, $commentguestid, $replyto, $secret, NOW())";
         $data = executeSQL();
+    
+        $commentid = json_decode($data, true)['lastinsertid'];
         
         if ($replyto != 'NULL') {
             $sql = "UPDATE commentbase
@@ -185,10 +188,22 @@ if ($type == 'post') {
             $data_update = executeSQL();
         }
         
+        // TODO: update this section to run only after comment is approved. for now do a simple message on frontend.
         $sql = "UPDATE blogbase
         SET hascomments = hascomments + 1
         WHERE id = $postid";
         executeSQL();
+
+        $comment = filter_var($_POST['comment'], FILTER_SANITIZE_STRING);
+
+        $msg = <<<CITE
+        Someone submitted a new comment:
+
+        $comment
+
+        Approve: <a href="http://www.redcodebluecode.com/approve_comment.php?commentid=$commentid&secret=$secret">Click to approve</a>
+CITE;
+        mail("robert@redcodebluecode.com","New comment",$msg);
         
         finish($data);
         
@@ -221,6 +236,7 @@ if ($type == 'post') {
             ON commentbase.commentguestid = guestbase.guestid
         WHERE commentbase.commentblogid = $postid 
         AND commentbase.replyto IS NULL 
+        AND commentbase.approved = 1
         ORDER BY commentbase.timewritten
         $limit_and_offset";
 
