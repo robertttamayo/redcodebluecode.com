@@ -2,7 +2,7 @@
 
 $bobblog_api_url = "http://www.redcodebluecode.com/api/";
 
-$count = 6;
+$count = 100;
 
 $url = "$bobblog_api_url?key&type=post&limit=$count";
 
