@@ -1,3 +1,9 @@
+"use strict";
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var WELCOME = 1;
 var EDITOR = 2;
 
@@ -11,41 +17,41 @@ var iconClose = "<i class=\"fa fa-window-close-o\" aria-hidden=\"true\"></i>";
 
 var code_embeds = {};
 
-var ChangeCatcher = function($) {
+var ChangeCatcher = function ChangeCatcher($) {
 
     var _unsavedChanges = false;
     var _window = window;
     var _this = this;
-    
-    $(document).on('focus click', '.change-watch', function(){
+
+    $(document).on('focus click', '.change-watch', function () {
         console.log('focus or click on .change-watch element');
         _this._unsavedChanges = true;
         _setWatcher();
     });
 
-    $(document).on('click', '.change-reset', function(){
+    $(document).on('click', '.change-reset', function () {
         console.log('click on .change-reset element');
         _this._unsavedChanges = false;
         _unsetWatcher();
     });
-    
-    var _setWatcher = function() {
+
+    var _setWatcher = function _setWatcher() {
         console.log('Unsaved changes');
-        _window.onbeforeunload = function() {
+        _window.onbeforeunload = function () {
             return 'There are unsaved changes. Are you sure you want to leave?';
-        }
-    }
-    var _unsetWatcher = function() {
+        };
+    };
+    var _unsetWatcher = function _unsetWatcher() {
         console.log('Resetting changes. No unsaved changes');
         _window.onbeforeunload = null;
-    }
-    
+    };
+
     return {
         get unsavedChanges() {
             return _unsavedChanges;
         },
         set unsavedChanges(v) {
-            if (typeof(v) == 'boolean') {
+            if (typeof v == 'boolean') {
                 _unsavedChanges = v;
                 if (_unsavedChanges == true) {
                     _setWatcher();
@@ -53,93 +59,93 @@ var ChangeCatcher = function($) {
                     _unsetWatcher();
                 }
             } else {
-                console.error('invalid parameter passed. boolean expected, received ' + typeof(v));
+                console.error('invalid parameter passed. boolean expected, received ' + (typeof v === "undefined" ? "undefined" : _typeof(v)));
             }
         },
-        reset: function() {
+        reset: function reset() {
             _unsavedChanges = false;
         }
-    }
-}
+    };
+};
 var changeCatcher = new ChangeCatcher(jQuery);
 
-var BobBlog = function() {
+var BobBlog = function BobBlog() {
     var _State = {
         home: 0,
         edit: 1,
         stats: 2
-    }
+    };
     var _state = 0;
     return {
         get state() {
             return _state;
         }
-    }
-}
+    };
+};
 
-$(document).ready(function(){
-    $("#main-container").html("").load(homeUrl + "src/welcome.php", function(){
+$(document).ready(function () {
+    $("#main-container").html("").load(homeUrl + "src/welcome.php", function () {
         mainContainerCallbacks();
     });
-    $(".home-button").on("click", function(){
-        $("#main-container").html("").load(homeUrl + "src/welcome.php", function(){
+    $(".home-button").on("click", function () {
+        $("#main-container").html("").load(homeUrl + "src/welcome.php", function () {
             mainContainerCallbacks();
         });
     });
-    $(".new-post").on("click", function(){
+    $(".new-post").on("click", function () {
         load("start");
-        $("#main-container").html("").load(homeUrl + "src/editor.php", function(){
+        $("#main-container").html("").load(homeUrl + "src/editor.php", function () {
             load("stop");
             editContainerCallbacks();
         });
     });
-    $(".post-edit").on("click", function(){
+    $(".post-edit").on("click", function () {
         var postid = $(this).data("postid");
         load("start");
-        $("#main-container").html("").load(homeUrl + "src/editor.php?postid=" + postid, function(){
+        $("#main-container").html("").load(homeUrl + "src/editor.php?postid=" + postid, function () {
             editContainerCallbacks();
             load("stop");
         });
     });
 });
-function catPopCallbacks(){
-    $(".create-tag").on("click", function(){
+function catPopCallbacks() {
+    $(".create-tag").on("click", function () {
         console.log("event listener fired");
         saveCat();
     });
-    $(".tag-name").on("click", function(){
+    $(".tag-name").on("click", function () {
         if ($(this).hasClass("active-tag")) {
             removeCatFromPost($(this), $("#postid-hidden").text());
         } else {
             addCatToPost($(this), $("#postid-hidden").text());
         }
     });
-    $(".dim, #close-tag-pop").on("click", function(){
-        $(".tag-pop-wrap").fadeOut("medium", function(){
+    $(".dim, #close-tag-pop").on("click", function () {
+        $(".tag-pop-wrap").fadeOut("medium", function () {
             $(this).remove();
         });
     });
 }
-function tagPopCallbacks(){
-    $(".create-tag").on("click", function(){
+function tagPopCallbacks() {
+    $(".create-tag").on("click", function () {
         saveTag();
     });
-    $(".tag-name").on("click", function(){
+    $(".tag-name").on("click", function () {
         if ($(this).hasClass("active-tag")) {
             removeTagFromPost($(this), $("#postid-hidden").text());
         } else {
             addTagToPost($(this), $("#postid-hidden").text());
         }
     });
-    $(".dim, #close-tag-pop").on("click", function(){
-        $(".tags-pop-wrap").fadeOut("medium", function(){
+    $(".dim, #close-tag-pop").on("click", function () {
+        $(".tags-pop-wrap").fadeOut("medium", function () {
             $(this).remove();
         });
     });
 }
-function imagePopCallbacks(){
+function imagePopCallbacks() {
     $('body').addClass('dim-active');
-    $("#featured-image-form").on("submit", function(event){
+    $("#featured-image-form").on("submit", function (event) {
         console.log("featured image form submitted");
         event.preventDefault();
 
@@ -148,33 +154,33 @@ function imagePopCallbacks(){
         imgData.append("postid", getPostId());
         uploadFeaturedImage(imgData);
     });
-    $(".dim, #featured-img-dialog-close").on("click", function(){
+    $(".dim, #featured-img-dialog-close").on("click", function () {
         console.log("closing featured img dialog, #featured-img-dialog-close clicked");
-        $(".featured-image-pop-wrap").fadeOut("medium", function(){
+        $(".featured-image-pop-wrap").fadeOut("medium", function () {
             $(this).remove();
         });
         $('body').removeClass('dim-active');
     });
 }
-function mainContainerCallbacks(){
-    $(".dim, #message-close").on("click", function(){
+function mainContainerCallbacks() {
+    $(".dim, #message-close").on("click", function () {
         $(".dim:not([data*=tags])").hide();
         $("#message").fadeOut();
         $('body').removeClass('dim-active');
     });
-    $(".post-edit").on("click", function(){
+    $(".post-edit").on("click", function () {
         var postid = $(this).data("postid");
         load("start");
-        $("#main-container").html("").load(homeUrl + "src/editor.php?postid=" + postid, function(){
+        $("#main-container").html("").load(homeUrl + "src/editor.php?postid=" + postid, function () {
             editContainerCallbacks();
             load("stop");
         });
     });
 }
-function editContainerCallbacks(){
-    $(".save-post").on("click", function(){
+function editContainerCallbacks() {
+    $(".save-post").on("click", function () {
         console.log("Attempting to save post");
-        if (!validatePost()){
+        if (!validatePost()) {
             return;
         }
         // save and publish
@@ -183,9 +189,9 @@ function editContainerCallbacks(){
         };
         savePost(data);
     });
-    $(".save-draft").on("click", function(){
+    $(".save-draft").on("click", function () {
         console.log("Attempting to save post as draft");
-        if (!validatePost()){
+        if (!validatePost()) {
             return;
         }
         // save and publish
@@ -194,7 +200,7 @@ function editContainerCallbacks(){
         };
         savePost(data);
     });
-    $(".unpublish-post").on("click", function(){
+    $(".unpublish-post").on("click", function () {
         console.log("Attempting to unpublish post");
         var postid = getPostId();
         // save and publish
@@ -204,56 +210,47 @@ function editContainerCallbacks(){
         };
         updateDraftStatus(data);
     });
-    
-    $(".manage-tags").on("click", function(){
+
+    $(".manage-tags").on("click", function () {
         var postid = $("#postid-hidden").text();
         var tagPop = document.createElement("div");
         var url = homeUrl + "src/tags.php?postid=" + postid;
         console.log(url);
         tagPop = $(tagPop);
-        $(tagPop).load(url, function(){
+        $(tagPop).load(url, function () {
             $("body").append($(tagPop));
             $(".dim").show().data("lock", "tags");
             tagPopCallbacks();
         });
     });
-    $(".manage-cats").on("click", function(){
+    $(".manage-cats").on("click", function () {
         var postid = $("#postid-hidden").text();
         var catPop = document.createElement("div");
         var url = homeUrl + "src/categories.php?postid=" + postid;
         console.log(url);
         catPop = $(catPop);
-        $(catPop).load(url, function(){
+        $(catPop).load(url, function () {
             $("body").append($(catPop));
             $(".dim").show().data("lock", "tags");
             catPopCallbacks();
         });
     });
-    // switch mode
-    $('#toggle-code-editor').on('click', function(){
-        switchMode();
-        if ($('body').hasClass('code-editor')) {
-            $(this).text('Default Editor');
-        } else {
-            $(this).text('Code Editor');
-        }
-    });
     // post permalink setup
-    $("#post-title").on("keyup", function(event){
+    $("#post-title").on("keyup", function (event) {
         var text = $(this).val();
         text = formatPermalink(text);
         $("#post-permalink-input").val(text);
     });
-    $("#post-permalink-input").on("keyup", function(event){
+    $("#post-permalink-input").on("keyup", function (event) {
         var text = $(this).val();
         text = formatPermalink(text);
         $(this).val(text);
     });
-    $(".permalink-change").on("click", function(){
+    $(".permalink-change").on("click", function () {
         $(this).parent().toggleClass("disabled");
-        if ($(this).parent().hasClass("disabled")){
+        if ($(this).parent().hasClass("disabled")) {
             console.log("Attempting to update permalink");
-            
+
             var permalink = $(this).parent().find("input").val();
             permalink = formatPermalink(permalink);
             var postid = getPostId();
@@ -265,15 +262,15 @@ function editContainerCallbacks(){
             updatePermalink(data);
         }
     });
-    $('.feature-image-tool').on('click', function(){
+    $('.feature-image-tool').on('click', function () {
         var postid = $("#postid-hidden").text();
         var imagePop = document.createElement("div");
         var url = homeUrl + "src/featuredimage.php?postid=" + postid;
         console.log(url);
         imagePop = $(imagePop);
-        $(imagePop).load(url, function(){
+        $(imagePop).load(url, function () {
             $("body").append(imagePop);
-//            $(".dim").show().data("lock", "tags");
+            //            $(".dim").show().data("lock", "tags");
             $('body').addClass('dim-active');
             imagePopCallbacks();
         });
@@ -288,13 +285,12 @@ function addTagToPost(tagElement, postid) {
     tagElement.toggleClass("active-tag");
     var tagid = tagElement.data("tagid");
     console.log("adding tag " + tagElement.data("tagid") + " to post " + postid);
-    $.post(window.location.href, {
+    $.post(window.location.href, _defineProperty({
         async: true,
         action: actionAddTagToPost,
         tagid: tagid,
-        postid: postid,
-        async: true
-    }, function(_data){
+        postid: postid
+    }, "async", true), function (_data) {
         console.log(_data);
     });
 }
@@ -307,7 +303,7 @@ function removeTagFromPost(tagElement, postid) {
         action: actionRemoveTagFromPost,
         tagid: tagid,
         postid: postid
-    }, function(_data){
+    }, function (_data) {
         console.log(_data);
     });
 }
@@ -321,7 +317,7 @@ function addCatToPost(catElement, postid) {
         action: actionAddCatToPost,
         catid: catid,
         postid: postid
-    }, function(_data){
+    }, function (_data) {
         console.log(_data);
     });
 }
@@ -334,11 +330,11 @@ function removeCatFromPost(catElement, postid) {
         action: actionRemoveCatFromPost,
         catid: catid,
         postid: postid
-    }, function(_data){
+    }, function (_data) {
         console.log(_data);
     });
 }
-function saveTag(){
+function saveTag() {
     var tagName = $("#tag-create-input").val();
     var postid = $("#postid-hidden").text();
     console.log(tagName);
@@ -347,16 +343,16 @@ function saveTag(){
         action: actionSaveTag,
         name: tagName,
         postid: postid
-    }, function(_data){
+    }, function (_data) {
         console.log("callback");
         _data = JSON.parse(_data);
         console.log(_data);
-        var event = new CustomEvent("tag_saved", {"detail": _data });
+        var event = new CustomEvent("tag_saved", { "detail": _data });
         document.dispatchEvent(event);
         console.log("after dispatching event");
     });
 }
-function saveCat(){
+function saveCat() {
     console.log("event function fired");
     var catName = $("#tag-create-input").val();
     var postid = $("#postid-hidden").text();
@@ -366,16 +362,16 @@ function saveCat(){
         action: actionSaveCat,
         name: catName,
         postid: postid
-    }, function(_data){
+    }, function (_data) {
         console.log("callback");
         _data = JSON.parse(_data);
         console.log(_data);
-        var event = new CustomEvent("cat_saved", {"detail": _data });
+        var event = new CustomEvent("cat_saved", { "detail": _data });
         document.dispatchEvent(event);
         console.log("after dispatching event");
     });
 }
-function savePost(data){
+function savePost(data) {
     var raw = $("#content").html();
     var title = $("#post-title").val();
     var draft = data.draft;
@@ -384,8 +380,8 @@ function savePost(data){
     var permalink = $("#post-permalink-input").val();
     console.log('postid: ' + postid);
     console.log('wasDraft: ' + wasDraft);
-    
-    $.post('#', {    
+
+    $.post('#', {
         action: actionSavePost,
         name: title,
         file: raw,
@@ -393,8 +389,8 @@ function savePost(data){
         wasdraft: wasDraft,
         postid: postid,
         permalink: permalink
-    },
-    function(_data){ //callback for debugging
+    }, function (_data) {
+        //callback for debugging
         console.log(_data);
         _data = JSON.parse(_data);
         console.log(_data);
@@ -405,68 +401,66 @@ function savePost(data){
         document.dispatchEvent(event);
     });
 }
-function updatePermalink(data){
+function updatePermalink(data) {
     var permalink = data.permalink;
     var postid = data.postid;
-    $.post(window.location.href, {   
+    $.post(window.location.href, {
         async: true,
         action: actionPostPermalink,
         permalink: permalink,
         postid: postid
-        },
-    function(_data){
+    }, function (_data) {
         console.log(_data);
         _data = JSON.parse(_data);
-        var event = new CustomEvent("permalink_changed", {detail: _data});
+        var event = new CustomEvent("permalink_changed", { detail: _data });
         document.dispatchEvent(event);
     });
 }
-function updateDraftStatus(data){
+function updateDraftStatus(data) {
     var draft = data.draft;
     console.log(data.draft);
     var postid = data.postid;
-    $.post(window.location.href, {   
+    $.post(window.location.href, {
         async: true,
         action: actionPostDraftStatus,
         draft: draft,
         postid: postid
-        },
-    function(_data){
+    }, function (_data) {
         console.log(_data);
         _data = JSON.parse(_data);
         var draft = _data.draft == "true" ? 1 : 0;
         $("#postid-hidden").text(_data.postid);
         $("#is-draft-hidden").text(draft);
-        var event = new CustomEvent("draft_status_changed", {detail: _data});
+        var event = new CustomEvent("draft_status_changed", { detail: _data });
         document.dispatchEvent(event);
     });
 }
-function uploadImage(imgData){
+function uploadImage(imgData) {
     var data = {
-            "action": actionUploadImage, 
-            "imgdata": imgData
-        };
+        "action": actionUploadImage,
+        "imgdata": imgData
+    };
     $.ajax({
         url: window.location.href,
         type: "POST",
         processData: false,
         contentType: false,
         data: imgData
-    }).done(function(_data){
+    }).done(function (_data) {
         console.log(_data);
         var data = JSON.parse(_data);
         console.log(data);
-        if (data.success){
-            var event = new CustomEvent("image_uploaded", {detail: data});
+        if (data.success) {
+            var event = new CustomEvent("image_uploaded", { detail: data });
             document.dispatchEvent(event);
         } else {
             alert(data.message);
         }
     });
 }
-function uploadFeaturedImage(imgData){
+function uploadFeaturedImage(imgData) {
     var data = {
-        "action": actionUploadFeaturedImage, 
+        "action": actionUploadFeaturedImage,
         "imgdata": imgData
     };
     console.log(data);
@@ -476,12 +470,12 @@ function uploadFeaturedImage(imgData){
         processData: false,
         contentType: false,
         data: imgData
-    }).done(function(_data){
+    }).done(function (_data) {
         console.log(_data);
         var data = JSON.parse(_data);
         console.log(data);
-        if (data.success){
-            var event = new CustomEvent("featured_image_uploaded", {detail: data});
+        if (data.success) {
+            var event = new CustomEvent("featured_image_uploaded", { detail: data });
             document.dispatchEvent(event);
         } else {
             alert(data.message);
@@ -489,12 +483,12 @@ function uploadFeaturedImage(imgData){
     });
 }
 var data;
-function createMessage(message){
+function createMessage(message) {
     $("#message-message").html(message);
     $(".dim").show();
     $("#message").fadeIn();
 }
-function validatePost(){
+function validatePost() {
     var title = $("#post-title").val();
     if (title == "") {
         createMessage("Your post needs a title.");
@@ -503,7 +497,7 @@ function validatePost(){
     return true;
 }
 // Event listeners
-document.addEventListener('featured_image_uploaded', function(event){
+document.addEventListener('featured_image_uploaded', function (event) {
     console.log(event.detail);
     var data = event.detail;
     $('.featured-image-pop-wrap').remove();
@@ -514,108 +508,71 @@ document.addEventListener('featured_image_uploaded', function(event){
     $('.feature-image-tool').html(_html);
 });
 
-document.addEventListener("image_uploaded", function(event){
+document.addEventListener("image_uploaded", function (event) {
     console.log(event.detail);
     var data = event.detail;
-//    $("#upload-preview").src(data.img_url);
+    //    $("#upload-preview").src(data.img_url);
     document.getElementById("img-dialog").close();
     insertImage(data.img_url);
 });
 
-document.addEventListener("post_saved", function (event){ 
+document.addEventListener("post_saved", function (event) {
     createMessage("Your post is safe!");
 }, false);
 
-document.addEventListener("draft_status_changed", function (event){ 
+document.addEventListener("draft_status_changed", function (event) {
     var message;
     var data = event.detail;
-    if (data.draft){
+    if (data.draft) {
         createMessage("This post is now a draft and not visible to the public.");
-        $('body').addClass('')
+        $('body').addClass('');
     } else {
         createMessage("Your post is published and visible to the public!");
     }
 }, false);
 
-document.addEventListener("tag_saved", function(event){
+document.addEventListener("tag_saved", function (event) {
     console.log(event.detail);
     var data = event.detail;
     createMessage("New tag \"" + data.tag_name + "\" created!");
     // create div and append it to end of tag list with the tag id and tag name
     var tagName = document.createElement("div");
     var tagId = document.createElement("div");
-    
+
     tagName = $(tagName);
     tagId = $(tagId);
-    
-    tagName.addClass("tag-name")
-            .addClass("active-tag")
-            .data("tagid", data.tag_id)
-            .text(data.tag_name)
-            .appendTo("#active-tags");
-    tagId.addClass("tag-id")
-            .text(data.tag_id)
-            .appendTo(tagName);
-    
+
+    tagName.addClass("tag-name").addClass("active-tag").data("tagid", data.tag_id).text(data.tag_name).appendTo("#active-tags");
+    tagId.addClass("tag-id").text(data.tag_id).appendTo(tagName);
 }, false);
 
-document.addEventListener("cat_saved", function(event){
+document.addEventListener("cat_saved", function (event) {
     console.log(event.detail);
     var data = event.detail;
     createMessage("New category \"" + data.cat_name + "\" created!");
     // create div and append it to end of tag list with the tag id and tag name
     var tagName = document.createElement("div");
     var tagId = document.createElement("div");
-    
+
     tagName = $(tagName);
     tagId = $(tagId);
-    
-    tagName.addClass("tag-name")
-            .addClass("active-tag")
-            .data("catid", data.cat_id)
-            .text(data.cat_name)
-            .appendTo("#active-tags");
-    tagId.addClass("tag-id")
-            .text(data.cat_id)
-            .appendTo(tagName);
-    
+
+    tagName.addClass("tag-name").addClass("active-tag").data("catid", data.cat_id).text(data.cat_name).appendTo("#active-tags");
+    tagId.addClass("tag-id").text(data.cat_id).appendTo(tagName);
 }, false);
-document.addEventListener("permalink_changed", function(event){
+document.addEventListener("permalink_changed", function (event) {
     console.log(event.detail);
     var data = event.detail;
     createMessage("This post's url is now \"" + homeUrl + data.permalink + ".");
 }, false);
 
-document.addEventListener("context_changed", function() {
+document.addEventListener("context_changed", function () {
     changeCatcher.reset();
 });
 
-function switchMode(){
-    if ($('body').hasClass('code-editor')) {
-        let html = $("#content").val();
-        $('body').removeClass('code-editor');
-        $('#content').remove();
-        let $div = $(`
-        <div contenteditable="true" id="content">
-            ${html}
-        </div>
-        `);
-        $('#frame').append($div);
-    } else {
-        let html = $('#content').html();
-        $('body').addClass('code-editor');
-        $('#content').remove();
-        let $textarea = $(`
-            <textarea id="content"></textarea>
-        `);
-        $textarea.val(html);
-        $('#frame').append($textarea);
-    }
-}
-
 // helpers/tools
-function load(mode){
-    switch(mode){
+function load(mode) {
+    switch (mode) {
         case "start":
             $(".dim").show();
             $(".loading").show();
@@ -626,83 +583,81 @@ function load(mode){
             break;
     }
 }
-function getPostId(){
+function getPostId() {
     return $("#postid-hidden").text();
 }
 
-let codeHandler = {
+var codeHandler = {
     next: 0,
     keys: [],
     values: {}
-}
 
-/** EDITOR FUNCTIONS */
-function initEditor(){
+    /** EDITOR FUNCTIONS */
+};function initEditor() {
     // code blocks
-    $("#code").on("click", function(){
-        
-        let id = codeHandler.next;
+    $("#code").on("click", function () {
+        console.log('confirming add code click');
+
+        var id = codeHanlder.next;
         codeHandler.next++;
         codeHandler.keys.sort();
 
-        insertCodeBlockEditor(`<button class="code-editor-holder" data-code-id="${id}">Code</button>`);
-        
-        openCodeBlockEditor(id);
+        var html = "\n            <div class=\"modal-code-editor\" data-code-id=\"" + id + "\">\n                <div class=\"code-submit-button\">Save</div>\n                <div class=\"code-exit-no-save\">Exit</div>\n                <div class=\"code-remove\">Remove</div>\n                <textarea></textarea>\n            </div>\n        ";
     });
 
     // bold italic underline strike
-    $("#italic").on("click", function(){
+    $("#italic").on("click", function () {
         document.execCommand("italic");
     });
-    $("#bold").on("click", function(){
+    $("#bold").on("click", function () {
         document.execCommand("bold");
     });
-    $("#underline").on("click", function(){
+    $("#underline").on("click", function () {
         document.execCommand("underline");
     });
-    $("#strike").on("click", function(){
+    $("#strike").on("click", function () {
         document.execCommand("strikeThrough");
     });
     // justify block
-    $("#left").on("click", function(){
+    $("#left").on("click", function () {
         document.execCommand("justifyLeft");
     });
-    $("#center").on("click", function(){
+    $("#center").on("click", function () {
         document.execCommand("justifyCenter");
     });
-    $("#right").on("click", function(){
+    $("#right").on("click", function () {
         document.execCommand("justifyRight");
     });
-    $("#justify").on("click", function(){
+    $("#justify").on("click", function () {
         document.execCommand("justifyFull");
     });
     // format
-    $("#pre").on("click", function(){
+    $("#pre").on("click", function () {
         document.execCommand("formatBlock", false, "PRE");
     });
-    $("#paragraph").on("click", function(){
+    $("#paragraph").on("click", function () {
         document.execCommand("formatBlock", false, "DIV");
     });
     // undo redo
-    $("#undo").on("click", function(){
+    $("#undo").on("click", function () {
         document.execCommand("undo");
     });
-    $("#redo").on("click", function(){
+    $("#redo").on("click", function () {
         document.execCommand("redo");
     });
     // font types
-    $("#header").on("click", function(){
+    $("#header").on("click", function () {
         document.execCommand("formatBlock", false, "H2");
     });
-    $("#normal").on("click", function(){
+    $("#normal").on("click", function () {
         document.execCommand("removeFormat");
     });
-    
+
     //colors
-    $("#show-colors-modal").on("click", function(){
-       $("#colors-modal").css("display", "inline-block");
+    $("#show-colors-modal").on("click", function () {
+        $("#colors-modal").css("display", "inline-block");
     });
-    $(".color-choose").on("click", function(){
+    $(".color-choose").on("click", function () {
         console.log("stuff is happen");
         var selection = document.getSelection();
         console.log("selection" + selection);
@@ -713,19 +668,19 @@ function initEditor(){
         document.execCommand("foreColor", false, color);
     });
     // links 
-    $("#link").on("click", function(){
+    $("#link").on("click", function () {
         var selection = document.getSelection();
         if (selection == "") {
             return;
-        } 
+        }
         var value = "";
-        if (selection.anchorNode.parentNode){
-            if (selection.anchorNode.parentNode.href){
+        if (selection.anchorNode.parentNode) {
+            if (selection.anchorNode.parentNode.href) {
                 value = selection.anchorNode.parentNode.href;
             }
         }
         var href = prompt("Enter the link address", value);
-        
+
         if (href != null) {
             if (!href.includes("http://") && !href.includes("https://")) {
                 href = "http://" + href;
@@ -733,23 +688,23 @@ function initEditor(){
             document.execCommand("createLink", false, href);
         }
     });
-    $("#unlink").on("click", function(){
+    $("#unlink").on("click", function () {
         document.execCommand("unlink");
     });
     // lists
-    $("#ol").on("click", function(){
+    $("#ol").on("click", function () {
         document.execCommand("insertOrderedList");
     });
-    $("#ul").on("click", function(){
+    $("#ul").on("click", function () {
         document.execCommand("insertUnorderedList");
     });
     // images
-    $("#image").on("click", function(){
+    $("#image").on("click", function () {
         $('#img-dialog').attr('data-mode', 'img');
         document.getElementById("img-dialog").showModal();
     });
-        
-    $("#image-form").on("submit", function(event){
+
+    $("#image-form").on("submit", function (event) {
         console.log("image form submitted");
         event.preventDefault();
 
@@ -757,175 +712,98 @@ function initEditor(){
         imgData.append("action", actionUploadImage);
         uploadImage(imgData);
     });
-    $('.feature-image-tool').on('click', function(){
-        
-    });
+    $('.feature-image-tool').on('click', function () {});
 }
-// code functions
-function insertCodeBlockEditor(html){
-    document.execCommand("insertHTML", false, html);
-}
-function openCodeBlockEditor(id) {
-    let value = codeHandler.values[id] || '';
-    let html = `
-        <div class="modal-code-editor" data-code-id="${id}">
-            <div class="button-group">
-                <div class="code-submit-button">Save</div>
-                <div class="code-exit-no-save">Exit</div>
-                <div class="code-remove">Remove</div>
-            </div>
-            <textarea rows="20" cols="50">${value}</textarea>
-        </div>
-    `;
-
-    $('body').append($(html));
-    console.log(codeHandler.values[id]);
-}
-
 // image functions
-$(document).ready(()=>{
-    $('body').on('click', '.code-exit-no-save', function(){
-        let $parent = $(this).closest('[data-code-id]');
-        $parent.remove();
-    });
-    $('body').on('click', '.code-remove', function(){
-        let $parent = $(this).closest('[data-code-id]');
-        let id = $parent.attr('data-code-id');
-        $(`button[data-code-id=${id}]`).remove();
-        $parent.remove();
-    });
-    $('body').on('click', '.code-submit-button', function(){
-        let $parent = $(this).closest('[data-code-id]');
-        let id = $parent.attr('data-code-id');
-        let text = $parent.find('textarea').val();
-        console.log(text);
-        codeHandler.values[id] = text;
-        $parent.remove();
-    });
-    $('body').on('click', 'button.code-editor-holder', function(){
-        let id = $(this).attr('data-code-id');
-        openCodeBlockEditor(id);
-    });
-});
-
-function insertImage(imgUrl){
+function insertImage(imgUrl) {
     if (document.execCommand("insertImage", false, imgUrl)) {
-       $("#content").find("img").each(function(){
-           if (!$(this).hasClass("edit-img")){
-               var suffix = new Date().getTime();
-               var className = "edit-img" + suffix;
-               wrapImage($(this), suffix);
-               attachImageEditor($(this), suffix);
-               $(this).addClass("edit-img").addClass(className).on("click", function(){
-
-               });
-               imgEditorCallbacks();
-           }
-       }); 
-    } 
+        $("#content").find("img").each(function () {
+            if (!$(this).hasClass("edit-img")) {
+                var suffix = new Date().getTime();
+                var className = "edit-img" + suffix;
+                wrapImage($(this), suffix);
+                attachImageEditor($(this), suffix);
+                $(this).addClass("edit-img").addClass(className).on("click", function () {});
+                imgEditorCallbacks();
+            }
+        });
+    }
 }
-function initImages(){
+function initImages() {
     console.log("init images");
-    $(".edit-img").on("click", function(){
-        $(this)
-            .parent()
-                .find(".img-editor-bar")
-                    .css("display", "flex");
+    $(".edit-img").on("click", function () {
+        $(this).parent().find(".img-editor-bar").css("display", "flex");
     });
 }
-function wrapImage(imgElem, suffix){
-    imgElem
-        .wrap("<div class=\"inline img-editor-wrap img-editor-wrap" + suffix + "\"></div>")
-        .on("click", function(){
-        $(this)
-            .parent()
-            .find(".img-editor-bar")
-                .css("display", "flex");
+function wrapImage(imgElem, suffix) {
+    imgElem.wrap("<div class=\"inline img-editor-wrap img-editor-wrap" + suffix + "\"></div>").on("click", function () {
+        $(this).parent().find(".img-editor-bar").css("display", "flex");
     });
 }
 
-function attachImageEditor(imgElem, suffix){
-    imgElem.after(
-        "<div class='img-editor-bar flex flex-hor container'>" +
-            "<div data-imgwrap='.img-editor-wrap" + suffix + "' data-imgtarget='.edit-img" + suffix + "' class='img-editor-group flex flex-hor'>" +
-                "<button type='button' class='btn img-small'><i class='fa fa-picture-o' aria-hidden='true'></i></button>" +
-                "<button type='button' class='btn img-medium'><i class='fa fa-picture-o' aria-hidden='true'></i></button>" +
-                "<button type='button' class='btn img-large'><i class='fa fa-picture-o' aria-hidden='true'></i></button>" +
-                "<button type='button' class='btn img-full'><i class='fa fa-arrows-h' aria-hidden='true'></i></button>" +
-            "</div>" +
-            "<div data-imgwrap='.img-editor-wrap" + suffix + "' data-imgtarget='.edit-img" + suffix + "' class='img-editor-group flex flex-hor'>" +
-                "<button class='btn img-left'>" + iconLeftJustify + "</button>" +
-                "<button class='btn img-center'>" + iconCenterJustify + "</button>" +
-                "<button class='btn img-right'>" + iconRightJustify + "</button>" +
-            "</div>" +
-            "<div data-imgwrap='.img-editor-wrap" + suffix + "' data-imgtarget='.edit-img" + suffix + "' class='img-editor-group flex flex-hor'>" +
-                "<button class='btn img-remove'>" + iconRemove + "</button>" +
-                "<button class='btn img-close'>" + iconClose + "</button>" +
-            "</div>" +
-        "</div>"
-    );
+function attachImageEditor(imgElem, suffix) {
+    imgElem.after("<div class='img-editor-bar flex flex-hor container'>" + "<div data-imgwrap='.img-editor-wrap" + suffix + "' data-imgtarget='.edit-img" + suffix + "' class='img-editor-group flex flex-hor'>" + "<button type='button' class='btn img-small'><i class='fa fa-picture-o' aria-hidden='true'></i></button>" + "<button type='button' class='btn img-medium'><i class='fa fa-picture-o' aria-hidden='true'></i></button>" + "<button type='button' class='btn img-large'><i class='fa fa-picture-o' aria-hidden='true'></i></button>" + "<button type='button' class='btn img-full'><i class='fa fa-arrows-h' aria-hidden='true'></i></button>" + "</div>" + "<div data-imgwrap='.img-editor-wrap" + suffix + "' data-imgtarget='.edit-img" + suffix + "' class='img-editor-group flex flex-hor'>" + "<button class='btn img-left'>" + iconLeftJustify + "</button>" + "<button class='btn img-center'>" + iconCenterJustify + "</button>" + "<button class='btn img-right'>" + iconRightJustify + "</button>" + "</div>" + "<div data-imgwrap='.img-editor-wrap" + suffix + "' data-imgtarget='.edit-img" + suffix + "' class='img-editor-group flex flex-hor'>" + "<button class='btn img-remove'>" + iconRemove + "</button>" + "<button class='btn img-close'>" + iconClose + "</button>" + "</div>" + "</div>");
 }
-function imgEditorCallbacks(){
+function imgEditorCallbacks() {
     // size
-    $(".img-small").on("click", function(){
+    $(".img-small").on("click", function () {
         $($(this).parent().data("imgwrap")).css("width", "40%");
     });
-    $(".img-medium").on("click", function(){
+    $(".img-medium").on("click", function () {
         $($(this).parent().data("imgwrap")).css("width", "60%");
     });
-    $(".img-large").on("click", function(){
+    $(".img-large").on("click", function () {
         $($(this).parent().data("imgwrap")).css("width", "80%");
     });
-    $(".img-full").on("click", function(){
+    $(".img-full").on("click", function () {
         $($(this).parent().data("imgwrap")).css("width", "100%");
     });
-    
+
     // alignment
-    $(".img-left").on("click", function(){
+    $(".img-left").on("click", function () {
         $($(this).parent().data("imgwrap")).css({
             "float": "left",
             "display": "inline-block"
         });
     });
-    $(".img-center").on("click", function(){
-        $($(this).parent().data("imgwrap"))
-            .css({
+    $(".img-center").on("click", function () {
+        $($(this).parent().data("imgwrap")).css({
             "float": "none",
             "margin": "auto",
             "display": "block"
         });
     });
-    $(".img-right").on("click", function(){
+    $(".img-right").on("click", function () {
         getImgWrap($(this)).css({
             "float": "right",
             "display": "inline-block"
         });
     });
-    
+
     // remove
-    $(".img-remove").on("click", function(){
+    $(".img-remove").on("click", function () {
         if (confirm("Are you sure you want to remove this image?")) {
             getImgWrap($(this)).remove();
         }
     });
-    
+
     // close
-    $(".img-close").on("click", function(){
+    $(".img-close").on("click", function () {
         getImgEditorBar($(this)).fadeOut();
     });
-    
-    function getImgWrap(elem){
+
+    function getImgWrap(elem) {
         return $(elem.parent().data("imgwrap"));
     }
-    function getImgEditorBar(elem){
-        return (elem.parent().parent());
+    function getImgEditorBar(elem) {
+        return elem.parent().parent();
     }
 }
 // helpers
-var Templator = function() {
+var Templator = function Templator() {
     var regex = /{{[\w]+}}/g;
-    this.processTemplate = function(html, data) {
-        console.log("debug html, data: " );
+    this.processTemplate = function (html, data) {
+        console.log("debug html, data: ");
         console.log(html);
         console.log(data);
         var name;
@@ -939,20 +817,20 @@ var Templator = function() {
             }
         }
         return html;
-    }
-}
+    };
+};
 var templator = new Templator();
 // random tools
-function formatPermalink(text){
+function formatPermalink(text) {
     text = text.replace(/ /g, "-");
     text = text.replace(/[+=\[\]{}|\\/<>;:'"\?!,.&^%\$@\(\)\*\&]/g, "");
     text = text.toLowerCase();
     return text;
 }
 
-function editPage(){
+function editPage() {
     $('div').attr('contenteditable', 'true');
-    $('body').on('click', 'a', function(event){
+    $('body').on('click', 'a', function (event) {
         event.preventDefault();
         event.stopPropagation();
     });

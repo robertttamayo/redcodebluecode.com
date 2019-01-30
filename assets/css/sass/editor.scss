@@ -14,6 +14,11 @@
         background: transparent;
     }
 }
+.code-editor {
+    .edit-container {
+        display: none;
+    }
+}
 .edit-item {
     padding: $padding-medium;
     

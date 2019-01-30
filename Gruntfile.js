@@ -5,6 +5,32 @@ module.exports = function(grunt) {
 
         pkg: grunt.file.readJSON('package.json'),
 
+        // transpile es6 to es5
+        babel: {
+            options: {
+                sourceMap: false,
+                presets: [
+                    [
+                        "env",
+                        {
+                            "targets": {
+                                "browsers": [
+                                    "last 2 versions"
+                                ]
+                            },
+                            "forceAllTransforms": true
+                        }
+                    ]
+                ]
+            },
+            dist: {
+                files: {
+                    'assets/babel/core.js': 'assets/js/core.js',
+                }
+            }
+            
+        },
+
         //minify js and output 2 .min.js files
         uglify: {
             options: {
@@ -12,7 +38,7 @@ module.exports = function(grunt) {
             },
             dist: {
                 files: {
-                    'assets/js/min/core.min.js': ['assets/js/*.js'],
+                    'assets/js/min/core.min.js': 'assets/babel/core.js',
                     'public/assets/js/core.min.js': ['public/assets/js/*.js']
                 }
             }
@@ -76,12 +102,13 @@ module.exports = function(grunt) {
     });
 
     grunt.loadNpmTasks('grunt-phpcs');
+    grunt.loadNpmTasks('grunt-babel');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
-    grunt.registerTask('default', ['uglify', 'sass', 'cssmin','watch']);
+    grunt.registerTask('default', ['babel', 'uglify', 'sass', 'cssmin','watch']);
 
 };

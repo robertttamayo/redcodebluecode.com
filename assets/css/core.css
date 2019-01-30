@@ -150,6 +150,10 @@ button.btn-ii, .btn-ii {
   background: transparent;
 }
 
+.code-editor .edit-container {
+  display: none;
+}
+
 .edit-item {
   padding: 12px;
 }
@@ -1010,6 +1014,54 @@ body.dim-active .dim {
   width: 20px;
   height: 20px;
   margin: 2px;
+}
+
+.modal-code-editor {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  max-width: 400px;
+  height: 300px;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background: #efefef;
+  border-radius: 5px;
+  border: 1px solid #aeaeae;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+.modal-code-editor .button-group {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: space-around;
+  -ms-justify-content: space-around;
+  justify-content: space-around;
+  margin-bottom: 10px;
+}
+.modal-code-editor .button-group > div {
+  cursor: pointer;
+  padding: 5px 10px;
+  background: #ccc;
+  color: white;
+  border-radius: 10px;
+}
+.modal-code-editor textarea {
+  width: 100%;
+  height: calc(100% - 40px);
 }
 
 /*# sourceMappingURL=core.css.map */

@@ -2,7 +2,11 @@
     "name": "RedCodeBlueCode",
     "version": "0.1.0",
     "devDependencies": {
-        "grunt": "~0.4.5",
+        "babel-cli": "latest",
+        "babel-core": "latest",
+        "babel-preset-env": "latest",
+        "grunt": "latest",
+        "grunt-babel": "^6",
         "grunt-contrib-concat": "latest",
         "grunt-contrib-uglify": "latest",
         "grunt-contrib-watch": "latest",
