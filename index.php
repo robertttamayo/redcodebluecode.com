@@ -17,6 +17,10 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <script>
+            console.log('test');
+            console.log('another one');
+        </script>
         <?php if ($blog_mode == BLOG_POST_PAGE) { ?>
             <title><?= $blog_data[0]['posttitle'] ?></title>
         <?php } else { ?>

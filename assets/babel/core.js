@@ -235,6 +235,15 @@ function editContainerCallbacks() {
             catPopCallbacks();
         });
     });
+    // switch mode
+    $('#toggle-code-editor').on('click', function () {
+        switchMode();
+        if ($('body').hasClass('code-editor')) {
+            $(this).text('Default Editor');
+        } else {
+            $(this).text('Code Editor');
+        }
+    });
     // post permalink setup
     $("#post-title").on("keyup", function (event) {
         var text = $(this).val();
@@ -570,6 +579,23 @@ document.addEventListener("context_changed", function () {
     changeCatcher.reset();
 });
 
+function switchMode() {
+    if ($('body').hasClass('code-editor')) {
+        var html = $("#content").val();
+        $('body').removeClass('code-editor');
+        $('#content').remove();
+        var $div = $("\n        <div contenteditable=\"true\" id=\"content\">\n            " + html + "\n        </div>\n        ");
+        $('#frame').append($div);
+    } else {
+        var _html2 = $('#content').html();
+        $('body').addClass('code-editor');
+        $('#content').remove();
+        var $textarea = $("\n            <textarea id=\"content\"></textarea>\n        ");
+        $textarea.val(_html2);
+        $('#frame').append($textarea);
+    }
+}
+
 // helpers/tools
 function load(mode) {
     switch (mode) {
@@ -596,13 +622,14 @@ var codeHandler = {
 };function initEditor() {
     // code blocks
     $("#code").on("click", function () {
-        console.log('confirming add code click');
 
-        var id = codeHanlder.next;
+        var id = codeHandler.next;
         codeHandler.next++;
         codeHandler.keys.sort();
 
-        var html = "\n            <div class=\"modal-code-editor\" data-code-id=\"" + id + "\">\n                <div class=\"code-submit-button\">Save</div>\n                <div class=\"code-exit-no-save\">Exit</div>\n                <div class=\"code-remove\">Remove</div>\n                <textarea></textarea>\n            </div>\n        ";
+        insertCodeBlockEditor("<button class=\"code-editor-holder\" data-code-id=\"" + id + "\">Code</button>");
+
+        openCodeBlockEditor(id);
     });
 
     // bold italic underline strike
@@ -714,7 +741,44 @@ var codeHandler = {
     });
     $('.feature-image-tool').on('click', function () {});
 }
+// code functions
+function insertCodeBlockEditor(html) {
+    document.execCommand("insertHTML", false, html);
+}
+function openCodeBlockEditor(id) {
+    var value = codeHandler.values[id] || '';
+    var html = "\n        <div class=\"modal-code-editor\" data-code-id=\"" + id + "\">\n            <div class=\"button-group\">\n                <div class=\"code-submit-button\">Save</div>\n                <div class=\"code-exit-no-save\">Exit</div>\n                <div class=\"code-remove\">Remove</div>\n            </div>\n            <textarea rows=\"20\" cols=\"50\">" + value + "</textarea>\n        </div>\n    ";
+
+    $('body').append($(html));
+    console.log(codeHandler.values[id]);
+}
+
 // image functions
+$(document).ready(function () {
+    $('body').on('click', '.code-exit-no-save', function () {
+        var $parent = $(this).closest('[data-code-id]');
+        $parent.remove();
+    });
+    $('body').on('click', '.code-remove', function () {
+        var $parent = $(this).closest('[data-code-id]');
+        var id = $parent.attr('data-code-id');
+        $("button[data-code-id=" + id + "]").remove();
+        $parent.remove();
+    });
+    $('body').on('click', '.code-submit-button', function () {
+        var $parent = $(this).closest('[data-code-id]');
+        var id = $parent.attr('data-code-id');
+        var text = $parent.find('textarea').val();
+        console.log(text);
+        codeHandler.values[id] = text;
+        $parent.remove();
+    });
+    $('body').on('click', 'button.code-editor-holder', function () {
+        var id = $(this).attr('data-code-id');
+        openCodeBlockEditor(id);
+    });
+});
+
 function insertImage(imgUrl) {
     if (document.execCommand("insertImage", false, imgUrl)) {
         $("#content").find("img").each(function () {
