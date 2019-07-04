@@ -361,6 +361,41 @@ footer {
   margin-top: 50px;
 }
 
+.formatted {
+  padding: 20px;
+  border-radius: 4px;
+  background: #333;
+  color: lightblue;
+  font-family: monospace;
+}
+.formatted .comm {
+  color: olivedrab;
+}
+.formatted .punc {
+  color: silver;
+}
+.formatted .quot {
+  color: sandybrown;
+}
+.formatted .lang {
+  color: cornflowerblue;
+}
+.formatted .decl {
+  color: green;
+}
+.formatted .html {
+  color: magenta;
+}
+.formatted .attr {
+  color: cornflowerblue;
+}
+.formatted .name {
+  color: palevioletred;
+}
+.formatted .tags {
+  color: silver;
+}
+
 /* blog meta, such as comments, likes */
 .blog-post-meta {
   display: -webkit-box;
