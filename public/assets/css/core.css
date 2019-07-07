@@ -361,39 +361,73 @@ footer {
   margin-top: 50px;
 }
 
+body .formatted {
+  background: #333;
+  color: lightblue;
+}
+body .formatted .comm {
+  color: olivedrab;
+}
+body .formatted .punc {
+  color: silver;
+}
+body .formatted .quot {
+  color: sandybrown;
+}
+body .formatted .lang {
+  color: cornflowerblue;
+}
+body .formatted .decl {
+  color: green;
+}
+body .formatted .html {
+  color: magenta;
+}
+body .formatted .attr {
+  color: cornflowerblue;
+}
+body .formatted .name {
+  color: palevioletred;
+}
+body .formatted .tags {
+  color: silver;
+}
+body.code-light-theme .formatted {
+  background: lightgray;
+  color: darkslategray;
+}
+body.code-light-theme .formatted .comm {
+  color: olivedrab;
+}
+body.code-light-theme .formatted .punc {
+  color: lightslategray;
+}
+body.code-light-theme .formatted .quot {
+  color: darkred;
+}
+body.code-light-theme .formatted .lang {
+  color: darkcyan;
+}
+body.code-light-theme .formatted .decl {
+  color: green;
+}
+body.code-light-theme .formatted .html {
+  color: magenta;
+}
+body.code-light-theme .formatted .attr {
+  color: cornflowerblue;
+}
+body.code-light-theme .formatted .name {
+  color: mediumvioletred;
+}
+body.code-light-theme .formatted .tags {
+  color: lightslategray;
+}
+
 .formatted {
   padding: 20px;
   border-radius: 4px;
-  background: #333;
-  color: lightblue;
   font-family: monospace;
-}
-.formatted .comm {
-  color: olivedrab;
-}
-.formatted .punc {
-  color: silver;
-}
-.formatted .quot {
-  color: sandybrown;
-}
-.formatted .lang {
-  color: cornflowerblue;
-}
-.formatted .decl {
-  color: green;
-}
-.formatted .html {
-  color: magenta;
-}
-.formatted .attr {
-  color: cornflowerblue;
-}
-.formatted .name {
-  color: palevioletred;
-}
-.formatted .tags {
-  color: silver;
 }
 
 /* blog meta, such as comments, likes */
