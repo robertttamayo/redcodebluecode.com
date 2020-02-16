@@ -1,4 +1,11 @@
 // COLORS
+$rbred: #c88584;
+$rbblue: #84a5c8;
+$rbgray: #565656;
+$rbteal: #58bdcb;
+$rborange: #de7c62;
+$rbdarkgray: #333;
+$rbwhite: #cecece;
 
 $dark-gray: #333;
 $inset-gray: #888;
@@ -50,6 +57,9 @@ $font-size-x-large: 40px;
 
 $screen-sm-max: 768px;
 $screen-sm-min: 769px;
+
+$screen-xs-max: 480px;
+$screen-xs-min: 481px;
 
 .font-size-x-large {
     font-size: $font-size-x-large;

@@ -44,6 +44,10 @@
     <body>
         
         <header>
+            <div class="page-title">
+                <h1>Robert Tamayo</h1>
+            </div>
+            
             <a class="redcodebluecode" href="http://www.redcodebluecode.com/" title="Red Code Blue Code home page">
                 <div>
                     <div class="redblue">
@@ -53,9 +57,6 @@
                     <div class="code">code</div>
                 </div>
             </a>
-            <div class="page-title">
-                <h1>Robert Tamayo's Code Blog</h1>
-            </div>
             <nav></nav>
         </header>
         <div class="main">

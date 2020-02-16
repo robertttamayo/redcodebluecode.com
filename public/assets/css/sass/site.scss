@@ -1,21 +1,30 @@
 body {
     font-family: $sans;
+    background: #565656;
 }
 header {
     @include flex();
-    @include justify-content(space-between);
-    @media(max-width: $screen-sm-max) {
-        @include justify-content(center);
-    }
+    @include justify-content(center);
+    @include align-items(center);
+    @include flex-direction(column);
+    position: relative;
+    height: 240px;
+    background: $rbgray;
 }
 .redcodebluecode {
 //    @include flex();
 //    @include justify-content(space-between);
     
     padding: 15px;
-    
+    z-index: 1;
     font-family: 'Press Start 2P', cursive;
-    font-size: 22px;
+    font-size: 3.5vw;
+    @media (max-width: $screen-sm-max) {
+        font-size: 5.5vw;
+    }
+    @media (max-width: $screen-xs-max) {
+        font-size: 8.5vw;
+    }
     
     text-decoration: none;
     > div {
@@ -28,97 +37,111 @@ header {
     .redblue {
         @include flex();
         @include justify-content(center);
-        font-size: 28px;
+        font-size: 3vw;
+        @media (max-width: $screen-sm-max) {
+            font-size: 5vw;
+        }
+        @media (max-width: $screen-xs-max) {
+            font-size: 8vw;
+        }
     }
     .red {
-        color: $red;
+        color: $rborange;
         @include transform(rotateY(180deg));
     }
     .blue {
-        color: $blue;
+        color: $rbteal;
     }
     .code {
-        color: #4d4d4d;
+        color: $rbred;
         margin: auto;
     }
 }
-header {
-    border-bottom: 1px solid #a8a8a8;
-}
+
 .page-title {
-    color: #4d4d4d;
-    @include transform(translate(-50%, 0));
-    left: 50%;
-    position: absolute;
+    color: $rbwhite;
+    font-size: 20px;
     font-family: $sans;
-    @media (max-width: $screen-sm-max) {
-        display: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 0;
+    @include flex();
+    @include justify-content(center);
+    @include flex-direction(column);
+    h1 {
+        margin: 0;
+        font-size: 14vw;
+        text-align: center;
+        z-index: 0;
+        opacity: 10%;
+        width: 100%;
+        @media (max-width: $screen-sm-max) {
+            font-size: 20vw;
+            line-height: 16vw;
+        }
+        @media (max-width: $screen-xs-max) {
+            font-size: 27vw;
+            line-height: 24vw;
+        }
     }
 }
 .main {
-    margin-top: 40px;
+    z-index: 1;
+    position: relative;
 }
 .main-middle {
     margin: auto;
-    width: 800px;
-    @media (max-width: 860px) {
-        width: calc(100% - 30px);
-    }
+    width: 100%;
 }
 .blog-home {
     
 }
+
 .blogfeed-item {
     @include flex();
-    margin-bottom: 50px;
     @media (max-width: $screen-sm-max) {
         @include flex-direction(column);
-        margin-bottom: 25px;
-        padding-bottom: 25px;
-        border-bottom: 1px solid #a8a8a8;
+        margin: 10px;
         &:last-child {
             border-bottom: none;
-            margin-bottom: 50px;
         }
         
         .blogfeed-title, .blogfeed-text-preview {
             width: 100%;
-            padding: 0;
+            padding: 20px;
             text-align: left;
         }
-        .blogfeed-title {
-            margin-bottom: 15px;
-        }
         .blogfeed-text-preview {
-            border-left: none;
+            padding: 20px;
         }
     }
 }
 .blogfeed-title {
     font-family: $sans;
     font-weight: bold;
-    color: $blue;
+    color: $rbgray;
     text-align: right;
-    padding-right: 20px;
+    padding: 60px;
+    padding-left: calc(50% - 400px);
     font-size: 28px;
-    width: 40%;
+    width: 50%;
     a {
         text-decoration: none;
-        color: $blue;
+        color: $rbgray;
     }
     .blogfeed-publishdate {
-        color: #4d4d4d;
+        color: $rbdarkgray;
         font-size: 14px;
         margin-top: 5px;
     }
 }
 .blogfeed-text-preview {
     font-size: 16px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    width: 60%;
-    border-left: 1px solid #a8a8a8;
-    padding-left: 20px;
+    width: 50%;
+    padding: 60px;
+    padding-right: calc(50% - 400px);
+    color: $rbdarkgray;
     @include flex();
     @include flex-direction(column);
     @include justify-content(space-between);
@@ -128,11 +151,45 @@ header {
     }
 }
 .read-more-link {
-    color: $red;
+    color: $rbdarkgray;
     text-decoration: none;
 }
+
+.blogfeed-item:nth-child(4n + 0){
+    .blogfeed-title {
+        background: $rbred;
+    }
+    .blogfeed-text-preview {
+        background: lighten($rbred, 10%);
+    }
+}
+.blogfeed-item:nth-child(4n + 1){
+    .blogfeed-title {
+        background: $rborange;
+    }
+    .blogfeed-text-preview {
+        background: lighten($rborange, 10%);
+    }
+}
+.blogfeed-item:nth-child(4n + 2){
+    .blogfeed-title {
+        background: $rbblue;
+    }
+    .blogfeed-text-preview {
+        background: lighten($rbblue, 10%);
+    }
+}
+.blogfeed-item:nth-child(4n + 3){
+    .blogfeed-title {
+        background: $rbteal;
+    }
+    .blogfeed-text-preview {
+        background: lighten($rbteal, 10%);
+    }
+}
+
 pre {
-    width: calc(100% - 20px);
+    width: calc(100% - 40px);
     margin: auto;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -143,37 +200,42 @@ pre {
     color: #326888;
     background: #333;
     color: #7ac5f1;
-    border-radius: 5px;
     padding: 20px;
     overflow-x: auto;
     font-size: 14px;
 }
-.blog-h1, .blog-h1 h1 {
-    color: $red;
+.blog-h1 {
+    padding: 20px;
     font-family: $sans;
     font-weight: bold;
-    margin-top: 0;
-    margin-bottom: 0;
+    color: $rbgray;
+    background: $rbteal;
+}
+.blog-h1 h1 {
+    color: $rbgray;
+    font-family: $sans;
+    font-weight: bold;
+    margin:0;
+    padding:0;
+    font-size: 40px;
 }
 .blog-post-meta {
     font-family: $sans;
-    color: $blue;
-    margin-top: 10px;
-    margin-bottom: 20px;
+    color: $rbgray;
+    margin-bottom: 10px;
 }
 body {
     min-height: calc(100vh - 200px);
 }
 footer {
-    border-top: 1px solid #a8a8a8;
     height: 50px;
     margin-top: 50px;
 }
 
 body {
     .formatted {
-        background: #333;
-        color: lightblue;
+        background: $rbgray;
+        color: lighten($rbblue, 10%);
         
         .comm {
             color: olivedrab;
@@ -240,7 +302,6 @@ body {
 }
 .formatted {
     padding: 20px;
-    border-radius: 4px;
     font-family: monospace;
 }
 
