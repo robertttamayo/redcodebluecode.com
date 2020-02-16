@@ -182,9 +182,19 @@ var SyntaxHighlighter = (function() {
                         inTag = false;
                         // output += `<span class="punc">${outputChar}</span>`;
                     } else if (regex.openTag.test(char)) {
-                        workingTest(true);
-                        inTag = true;
-                        hasName = false;
+                        let nextIndex = i + 1;
+                        if (nextIndex < html.length) {
+                            let nextChar = html.charAt(nextIndex);
+                            if (!regex.whitespace.test(nextChar)){
+                                workingTest(true);
+                                inTag = true;
+                                hasName = false;
+                            } else {
+                                workingTest();
+                            }
+                        } else {
+                            workingTest();
+                        }
                         // output += `<span class="punc">${outputChar}</span>`;
                     } else {
                         workingTest();
