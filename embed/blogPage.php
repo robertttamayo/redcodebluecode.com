@@ -7,12 +7,14 @@ if (sizeof($blog_data) == 0) {
     
 } else { ?>
 
-<div class="blog-h1">
-    <div class="blog-post-meta">
-        <div class="blog-author"><?= $blog_data[0]['author'] ?> | <?= date_format(date_create($blog_data[0]['publishdate']), "F d, Y"); ?></div>
-    </div>
+<div class="blog-h1-wrap" data-style="<?= $post_style ?>">
+    <div class="blog-h1">
+        <div class="blog-post-meta">
+            <div class="blog-author"><?= $blog_data[0]['author'] ?> | <?= date_format(date_create($blog_data[0]['publishdate']), "F d, Y"); ?></div>
+        </div>
 
-    <h1><?= $blog_data[0]['posttitle'] ?></h1>
+        <h1><?= $blog_data[0]['posttitle'] ?></h1>
+    </div>
 </div>
 
 <?php

@@ -398,12 +398,30 @@ pre {
   font-size: 14px;
 }
 
-.blog-h1 {
+.blog-h1-wrap {
   padding: 20px;
+  background: #58bdcb;
+}
+.blog-h1-wrap[data-style="0"] {
+  background: #de7c62;
+}
+.blog-h1-wrap[data-style="1"] {
+  background: #84a5c8;
+}
+.blog-h1-wrap[data-style="2"] {
+  background: #58bdcb;
+}
+.blog-h1-wrap[data-style="3"] {
+  background: #c88584;
+}
+
+.blog-h1 {
+  padding: 0;
   font-family: "Fira Sans", sans-serif;
   font-weight: bold;
   color: #565656;
-  background: #58bdcb;
+  max-width: 800px;
+  margin: auto;
 }
 
 .blog-h1 h1 {
@@ -527,6 +545,8 @@ body.code-light-theme .formatted .tags {
 
 .blog-post {
   color: #cecece;
+  max-width: 800px;
+  margin: auto;
 }
 
 /* blog comments */

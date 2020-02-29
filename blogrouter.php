@@ -18,43 +18,35 @@ $uri = $_SERVER['REQUEST_URI'];
 $uri = str_replace(BLOG_INSTALL_DIR, "", $uri);
 $uri = trim($uri, "/");
 $uri = explode("?", $uri)[0];
-
 $main_content = "";
 $category_uri = "";
 
-//die;
+$post_style = 2;
+if (isset($_GET['style'])) {
+    $post_style = filter_var($_GET['style'], FILTER_SANITIZE_NUMBER_INT);
+}
+
 if ($uri === "") {
-//    ob_start();
-//    include (SRC_DIR . "blogHomePage.php");
-//    $main_content = ob_get_clean();
+
 } else {
-//    ob_start();
+
     $parts = explode("/", $uri);
     if (sizeof($parts) == 1) {
         // post pages have only one part
         $blog_permalink = $uri;
         $blog_mode = BLOG_POST_PAGE;
-//        include (SRC_DIR . "blogPage.php");
-//        $main_content = ob_get_clean();
+
     } else {
         $blog_mode = BLOG_CATEGORY_PAGE;
         $category_uri = $parts[0];
         $category_permalink = $parts[1];
         
         if ($category_uri != CATEGORY_URI){
-            // error 404 time
-//            echo "error 404: invalid category uri";
-//            include(SRC_DIR . "error404.php");
-            // redirect to blog home page
+
         } else {
-//            $categoryMode = true;
-//            include (SRC_DIR . "blogHomePage.php");
-//            $main_content = ob_get_clean();
+
         }
     }
     
 }
-
-// prepare all variables, then load the template
-//include('mainSiteHTML.html');
 

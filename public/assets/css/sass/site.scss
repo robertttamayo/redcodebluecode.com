@@ -204,12 +204,29 @@ pre {
     overflow-x: auto;
     font-size: 14px;
 }
-.blog-h1 {
+.blog-h1-wrap {
     padding: 20px;
+    background: $rbteal;
+    &[data-style="0"] {
+        background: $rborange;
+    }
+    &[data-style="1"] {
+        background: $rbblue;
+    }
+    &[data-style="2"] {
+        background: $rbteal;
+    }
+    &[data-style="3"] {
+        background: $rbred;
+    }
+}
+.blog-h1 {
+    padding: 0;
     font-family: $sans;
     font-weight: bold;
     color: $rbgray;
-    background: $rbteal;
+    max-width: 800px;
+    margin: auto;
 }
 .blog-h1 h1 {
     color: $rbgray;

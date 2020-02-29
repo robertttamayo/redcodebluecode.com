@@ -46,14 +46,14 @@ $blog_data = json_decode($data, true);
 
         <div class="blogfeed-item">
             <div class="blogfeed-title">
-                <a href="<?= BLOG_URL ?><?= $blog['permalink'] ?>">
+                <a href="<?= BLOG_URL ?><?= $blog['permalink'] ?>?style=<?= $i % 4 ?>">
                     <?= $blog['posttitle'] ?>
                 </a>
                 <div class="blogfeed-publishdate"><?= $date; ?></div>
             </div>
             <div class="blogfeed-text-preview">
                 <div><?= $short_preview ?></div>
-                <div><a class="read-more-link" href="<?= BLOG_URL ?><?= $blog['permalink'] ?>">Continue <i class="fas fa-arrow-alt-circle-right"></i></a></div>
+                <div><a class="read-more-link" href="<?= BLOG_URL ?><?= $blog['permalink'] ?>?style=<?= $i % 4 ?>">Continue <i class="fas fa-arrow-alt-circle-right"></i></a></div>
             </div>
             
         </div>
